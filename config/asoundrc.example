@@ -1,0 +1,8 @@
+pcm.btmic {
+    type pulse
+    device "bluez_source.XX_XX_XX_XX_XX_XX.handsfree_head_unit"
+}
+pcm.btspeaker {
+    type pulse
+    device "bluez_sink.XX_XX_XX_XX_XX_XX.handsfree_head_unit"
+}

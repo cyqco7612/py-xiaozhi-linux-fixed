@@ -1,0 +1,1 @@
+{"AUDIO_DEVICES":{"input_channels":1,"input_device_name":"pulse","input_sample_rate":16000,"output_channels":1,"output_device_name":"pulse","output_sample_rate":16000},"SYSTEM_OPTIONS":{"NETWORK":{"AUTHORIZATION_URL":"https://xiaozhi.me/","OTA_VERSION_URL":"https://api.tenclass.net/xiaozhi/ota/","WEBSOCKET_URL":null}},"WAKE_WORD_OPTIONS":{"USE_WAKE_WORD":true}}

@@ -1,0 +1,27 @@
+--- /tmp/audio_device_orig.py	2026-10-20 08:44:45.514351343 +0800
++++ /dev/fd/63	2026-10-20 08:44:45.518351343 +0800
+@@ -86,9 +86,24 @@
+         # 3. 输入固定单声道（协议要求 + 避免阵列驱动延迟），输出保持设备声道数
+         input_channels = 1
+         output_channels = output_info["channels"]
++        configured_output_channels = audio_config.get("output_channels")
++        if configured_output_channels is not None:
++            configured_output_channels = int(configured_output_channels)
++            if not 1 <= configured_output_channels <= output_channels:
++                raise RuntimeError("Configured output channel count is unsupported")
++            output_channels = configured_output_channels
+ 
+         device_input_sample_rate = input_info["sample_rate"]
+         device_output_sample_rate = output_info["sample_rate"]
++        # 允许配置显式覆盖采样率（蓝牙 HFP 麦克风原生 16kHz，自动检测的 44.1kHz 重采样无声）
++        cfg_in_sr = audio_config.get("input_sample_rate")
++        if cfg_in_sr and int(cfg_in_sr) != device_input_sample_rate:
++            logger.info(f"配置覆盖输入采样率: {device_input_sample_rate} -> {cfg_in_sr}")
++            device_input_sample_rate = int(cfg_in_sr)
++        cfg_out_sr = audio_config.get("output_sample_rate")
++        if cfg_out_sr and int(cfg_out_sr) != device_output_sample_rate:
++            logger.info(f"配置覆盖输出采样率: {device_output_sample_rate} -> {cfg_out_sr}")
++            device_output_sample_rate = int(cfg_out_sr)
+ 
+         logger.info(
+             f"使用输入设备: {input_info['name']} | "
